@@ -1,0 +1,17 @@
+= pw-resolvd-discover
+
+Do not use, this is PoC project which works for me, but will require some fiddling for anyone else.
+
+I have sonos speaker, which work through pulseaudio raop module.
+
+The problem is, pulseaudio raop discovery works with avahi zeroconf server, and not thru systemd-resolved mdns support,
+which I want to use, because I hate avahi messing with my complicated networking setup.
+
+Solution? Use resolved dbus api to discover raop devices, and attach them to pipewire server.
+
+Only caveat is that server should be restarted if any of sonos devices change their address, because disconnected
+devices are not being removed, but that is not a problem for me, because my wireplumber setup automaticly connects to
+the most recently discovered sonos speaker for each room.
+
+It also doesn't work with ipv6, because raop-sink module doesn't have ability to provide interface for link-local
+addresses.
